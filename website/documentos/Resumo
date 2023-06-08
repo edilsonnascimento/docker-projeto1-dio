@@ -1,0 +1,123 @@
+09 - AjaxBuscando pacientes com AJAX
+
+
+01 - Introdução ao AJAX
+
+Buscando dados da API (https://api-pacientes.herokuapp.com/pacientes) e adicionando no Site da aparecida.
+
+- Adicionado um botão de busca no HTML.
+<button id="buscar-pacientes" class="botao bto-principal">Buscar Pacientes</button>
+
+- criado arquivo buscar-pacientes.js e relacionado HTML
+<script src="js/buscar-pacientes.js"></script>
+
+- Adicionado o códig abaixo no JS, para buscar os pacientes quando clicado no botão Buscar Pacientes.
+
+// cria objeto buscarPacientes, do botão.
+var buscarPacienes = document.querySelector("#buscar-pacientes");
+// adiciona escuta do evento de click.
+buscarPacienes.addEventListener("click", function(){
+
+    //objeto responsável pela requisição HTTP.
+    var xhr = new XMLHttpRequest();
+
+    //congingura objeto para requisição de GET.
+    xhr.open("GET", "https://api-pacientes.herokuapp.com/pacientes");
+
+    // adiciona evento de escuta quando carregar a página
+    xhr.addEventListener("load", function(){
+        console.log(xhr.responseText);
+    });
+
+    //envia requisição.
+    xhr.send();
+
+});
+
+
+02 - O Objeto requisitor
+Qual dos códigos abaixo consegue criar um objeto responsável por fazer uma requisição HTTP com o Javascript ?
+
+O objeto XMLHttpRequest é quem é responsável por fazer requisições HTTP assíncronas com Javascript. Apesar de ter o XML no nome hoje em dia este objeto pode trafegar diversos outros tipos de dados além do XML, este nome só se manteve devido a um legado histórico.
+E para instanciar um novo Objeto XMLHttpRequest devemos utilizar a sintaxe com a palavrinha new :
+var xhr = new XMLHttpRequest();
+
+03 - Configurando nossa requisição
+
+Dado que criamos o objeto abaixo:
+var xhr = new XMLHttpRequest();
+Qual dos seguintes códigos configura a nossa requisição para ser do tipo POST e para o endereço www.xyz.com.br/compras ?
+Dado que temos um XMLHttpRequest, precisamos configurar nossa requisição para dizer para qual servidor queremos enviá-la e também qual método HTTP devemos usar.
+Fazemos isto através do método .open(), passando o método e a url : xhr.open("POST","www.xyz.com.br/compras");
+
+04 - Tratando a resposta da requisição
+
+Inserindo JSON, recebido da API no HTML, de forma assincrona.
+A técnica utilizada nessa aula é conhecida como AJAX, essa maneira de fazer uma requisição de forma assíncrona com JavaScript.
+
+//Busca pacientes do HTML
+var buscarPacientes = document.querySelector("#buscar-pacientes");
+//adiciona escutador de click
+buscarPacienes.addEventListener("click", function(){
+    //cria objeto para requisição web.
+    var xhr = new XMLHttpRequest();
+    //paremetros do objeto
+    xhr.open("GET", "https://api-pacientes.herokuapp.com/pacientes");
+    //escutador de pagina carregada 
+    xhr.addEventListener("load", function(){
+        //parcear ou serializa de JSON para objeto, neste caso ARRAY. 
+        var pacientes = JSON.parse(xhr.responseText);
+        //percorre array e adiona o paciente no HTML
+        pacientes.forEach(function(paciente){
+            adicionarPacienteNaTabela(paciente);
+        });    
+    });
+    //envia dados para endereço do xhr.open(); 
+    xhr.send();
+
+});
+
+05 - Capturando erros de requisição
+
+Tratando erros da resposta da web.
+- Adicionado span no html para exibir o erro
+<span id="erro-ajax" class="invisivel">Erro ao buscar pacinetes</span>
+
+- criado objeto erroAjax
+var erroAjax = document.querySelector("#erro-ajax");
+
+- caso erro mostra erro
+erroAjax.classList.remove("invisivel");
+
+
+06 - O XMLHttpRequest
+
+Sobre o XMLHttpRequest , julgue as afirmativas abaixo e selecione as verdadeiras:
+1- É necessário configurar a requisição com o método .open(), com o método HTTP e o endereço do servidor para qual a requisição será feita
+2- É utilizado para fazer requisições assíncronas e trafegar apenas dados do tipo XML.
+3- A requisição só é enviada após o método .send().
+
+A primeira afirmativa é verdadeira.
+A terceira afirmativa é verdadeira.
+O XMLHtttpRequest é objeto responsável por fazer requisições HTTP com o Javascript.
+Olhando as afirmativas, sabemos sim que ele deve ser configurado anteriormente com a função .open(), que ele pode trafegar diversos tipos de dados e não somente o XML ( ele tem esse nome graças a um vestígio histórico), e a requisição só é enviada mesmo após chamarmos o método .send().
+
+07 - Encerramento
+Agradecimento
+
+08 - Mãos na massa: conectando com servidor
+Implementado
+
+09 - Mãos na massa: adicionando os pacientes na tabela
+Implementado
+
+10 - Mãos na massa: lidando com erros da requisição
+Implementado
+
+11  - Download do projeto final
+
+Com tudo pronto, é possível baixar a versão final do site da Aparecida Nutrição clicando aqui.(https://s3.amazonaws.com/caelum-online-public/introducao-javascript/stages/introducao-javascript-final.zip)
+
+
+
+
